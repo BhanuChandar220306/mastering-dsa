@@ -13,7 +13,7 @@ Organized Structure: Solutions are categorized neatly by problem name, difficult
 Progress Tracking: Acts as a portfolio of my technical growth and logical thinking over time.
 
 🛠️ Tech Stack & Focus Areas
-Primary Language: Java / C++ / Python (Feel free to keep only the languages you use!)
+Primary Language: Java 
 
 Core Concepts Covered:
 
