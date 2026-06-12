@@ -7,10 +7,9 @@ class Solution {
        for(int i=0;i<nums.length;i++)
        {
         sum+=nums[i];
-        int dif=sum-k;
-        if(hmap.containsKey(dif))
+        if(hmap.containsKey(sum-k))
         {
-            count+=hmap.get(dif);
+            count+=hmap.get(sum-k);
         }
         hmap.put(sum,hmap.getOrDefault(sum,0)+1);
        }
