@@ -4,9 +4,9 @@ class Solution {
        int count=0;
        int sum=0;
        hmap.put(0,1);
-       for(int i=0;i<nums.length;i++)
+       for(int x:nums)
        {
-        sum+=nums[i];
+        sum+=x;
         if(hmap.containsKey(sum-k))
         {
             count+=hmap.get(sum-k);
