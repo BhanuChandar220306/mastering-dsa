@@ -1,6 +1,6 @@
 class Solution {
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        // Ensure nums1 is the smaller array to optimize binary search time complexity to O(log(min(m, n)))
+        // Ensure nums1 is the smaller array to optimize binary search to O(log(min(m, n)))
         if (nums1.length > nums2.length) {
             return findMedianSortedArrays(nums2, nums1);
         }
@@ -11,38 +11,37 @@ class Solution {
         int high = m;
         
         while (low <= high) {
-            // Partition nums1 and nums2
+            // Partition positions
             int partitionX = (low + high) / 2;
             int partitionY = (m + n + 1) / 2 - partitionX;
             
-            // If partitionX is 0 it means nothing is on left side for nums1. Use -Infinity for maxLeftX
-            // If partitionX is length of input then nothing is on right side for nums1. Use +Infinity for minRightX
-            int maxLeftX = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
-            int minRightX = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
+            // L1, R1 representing the boundary elements of nums1
+            int L1 = (partitionX == 0) ? Integer.MIN_VALUE : nums1[partitionX - 1];
+            int R1 = (partitionX == m) ? Integer.MAX_VALUE : nums1[partitionX];
             
-            int maxLeftY = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
-            int minRightY = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
+            // L2, R2 representing the boundary elements of nums2
+            int L2 = (partitionY == 0) ? Integer.MIN_VALUE : nums2[partitionY - 1];
+            int R2 = (partitionY == n) ? Integer.MAX_VALUE : nums2[partitionY];
             
-            // Check if we found the correct partition
-            if (maxLeftX <= minRightY && maxLeftY <= minRightX) {
-                // If the total number of elements is odd
+            // Check if we have found the correct partition
+            if (L1 <= R2 && L2 <= R1) {
+                // If total elements are odd
                 if ((m + n) % 2 == 1) {
-                    return Math.max(maxLeftX, maxLeftY);
+                    return Math.max(L1, L2);
                 } 
-                // If the total number of elements is even
+                // If total elements are even
                 else {
-                    return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2.0;
+                    return (Math.max(L1, L2) + Math.min(R1, R2)) / 2.0;
                 }
-            } else if (maxLeftX > minRightY) {
-                // We are too far to the right in nums1, move left
+            } else if (L1 > R2) {
+                // Too far right in nums1, move partition left
                 high = partitionX - 1;
             } else {
-                // We are too far to the left in nums1, move right
+                // Too far left in nums1, move partition right
                 low = partitionX + 1;
             }
         }
         
-        // Only reached if inputs are not sorted or invalid
         throw new IllegalArgumentException("Input arrays are not sorted.");
     }
 }
